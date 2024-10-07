@@ -1,4 +1,5 @@
 import './App.css'
+import Chat from './Chat';
 
 async function initGoogleMap() {
   const { Map3DElement } = await google.maps.importLibrary("maps3d") as any;
@@ -26,6 +27,7 @@ function App() {
   
   return (
     <>
+      <Chat />
     </>
   )
 }
