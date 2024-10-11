@@ -12,8 +12,14 @@
   },
   "dependencies": {
     "@types/google.maps": "^3.58.1",
+    "highlight.js": "^11.10.0",
+    "html-react-parser": "^5.1.18",
+    "isomorphic-dompurify": "^2.16.0",
+    "marked": "^14.1.2",
+    "marked-highlight": "^2.1.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "sse.js": "^2.5.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240925.0",
