@@ -39,7 +39,6 @@ export default function Map() {
     if (!state.map || !state.hasUpdate) {
       return;
     }
-
     state.map.flyCameraTo({
       endCamera: {
         center: { lat: state.lat, lng: state.lng, altitude: 0 },

@@ -90,7 +90,6 @@ function Chat() {
 
   return (
     <div className="fixed bottom-0 left-0 m-12">
-      <h1>Chat</h1>
       <MessageList
         loading={loading}
         streaming={streaming}
