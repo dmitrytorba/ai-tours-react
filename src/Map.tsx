@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { MapState, useMapStore } from "./hooks/useMapStore";
+const { Map3DElement } = (await google.maps.importLibrary("maps3d")) as any;
 
 async function returnGoogleMap(state: MapState) {
   console.log("returnGoogleMap", state);
-  const { Map3DElement } = (await google.maps.importLibrary("maps3d")) as any;
 
   const map = new Map3DElement({
     center: { lat: state.lat, lng: state.lng, altitude: 0 },
@@ -39,6 +39,7 @@ export default function Map() {
     if (!state.map || !state.hasUpdate) {
       return;
     }
+
     state.map.flyCameraTo({
       endCamera: {
         center: { lat: state.lat, lng: state.lng, altitude: 0 },
