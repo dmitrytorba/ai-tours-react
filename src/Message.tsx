@@ -1,4 +1,8 @@
-import parse, { HTMLReactParserOptions } from "html-react-parser";
+import parse, {
+  DOMNode,
+  domToReact,
+  HTMLReactParserOptions,
+} from "html-react-parser";
 import DOMPurify, { Config } from "isomorphic-dompurify";
 import { MapPinned } from "lucide-react";
 import { cn } from "./lib/utils";
@@ -29,7 +33,22 @@ export const Message = ({
   isUser = false,
 }: Props) => {
   const parseOptions: HTMLReactParserOptions = {
-    replace: () => {},
+    replace: (el) => {
+      if (el.type === "tag" && el.name === "p") {
+        return (
+          <p className="py-1">
+            {domToReact(el.children as DOMNode[], parseOptions)}
+          </p>
+        );
+      }
+      if (el.type === "tag" && el.name === "h3") {
+        return (
+          <h3 className="py-2 text-lg font-bold">
+            {domToReact(el.children as DOMNode[], parseOptions)}
+          </h3>
+        );
+      }
+    },
   };
 
   return (
