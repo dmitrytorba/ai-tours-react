@@ -1,4 +1,5 @@
 import { ChangeEvent, useRef } from "react";
+import useAutosizeTextArea from "./hooks/useAutoresizeTextarea";
 
 interface ChatInputProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -16,6 +17,9 @@ export const ChatInput = ({
   handleInputChange,
 }: ChatInputProps) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useAutosizeTextArea(textAreaRef.current, input);
+
   const handleSubmit = () => {
     if (formRef.current) {
       formRef.current.dispatchEvent(
@@ -46,9 +50,9 @@ export const ChatInput = ({
         value={input}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        data-testid="embed-chat-input"
         ref={textAreaRef}
         placeholder="Ask the tour guide..."
+        className="flex rounded-full resize-none bg-gray-700 w-full pl-4 pr-8"
       />
       <button>Send</button>
     </form>
