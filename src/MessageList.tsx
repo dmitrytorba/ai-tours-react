@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Message } from "./Message";
-import { ChatMessageDto } from "./types";
+import { ChatMessageDto, Role } from "./types";
 
 interface Props {
   loading: boolean;
@@ -16,7 +16,7 @@ export const MessageList = ({
   stream,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-2 mb-4">
+    <div className="flex flex-col gap-2 mb-4 overflow-auto">
       {messages.map((item, index) => (
         <Fragment key={`user-msg-${index}`}>
           <Message
@@ -25,27 +25,10 @@ export const MessageList = ({
             streaming={false}
             messages={messages}
             stream={null}
+            isUser={item.role === Role.user}
           />
         </Fragment>
       ))}
-      <Message
-        message={
-          "This is a test message. It is long and will wrap. Maybe. Okay, it will. We're sure of it. We think. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see."
-        }
-        loading={loading}
-        streaming={streaming}
-        messages={messages}
-        stream={stream}
-      />
-
-      <Message
-        message={"Ok thats cool"}
-        loading={loading}
-        streaming={streaming}
-        messages={messages}
-        stream={stream}
-        isUser={true}
-      />
     </div>
   );
 };

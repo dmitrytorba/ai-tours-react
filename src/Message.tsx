@@ -21,7 +21,7 @@ export const Message = ({
   isUser = false,
 }: Props) => {
   return (
-    <div className={cn("flex my-2", isUser ? "justify-end" : "")}>
+    <div className={cn("flex my-2", isUser ? "justify-end" : "mr-2")}>
       {!isUser && (
         <div className="bg-gray-900 rounded-full shrink-0 mr-2 w-10 h-10 flex ">
           <div className="flex h-full w-full items-center justify-center">

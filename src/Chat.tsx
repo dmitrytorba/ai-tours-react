@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, useCallback, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { ReadyStateEvent, SSE, SSEvent } from "sse.js";
 import { ChatInput } from "./ChatInput";
 import { useMapStore } from "./hooks/useMapStore";
@@ -12,6 +19,7 @@ function Chat() {
   const [loading, setLoading] = useState<boolean>(false);
   const [streaming, setStreaming] = useState<boolean>(false);
   const [stream, setStream] = useState<ChatMessageDto | null>(null);
+  const [hasIntro, setHasIntro] = useState<boolean>(false);
   const mapState = useMapStore();
 
   const registerEventSourceCallbacks = useCallback((eventSource: SSE) => {
@@ -49,12 +57,13 @@ function Chat() {
   );
 
   const handleSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
+    (e?: FormEvent<HTMLFormElement>) => {
       setLoading(true);
-      e.preventDefault();
+      e?.preventDefault();
 
+      console.log("handleSubmit", input);
       // ignore empty input
-      if (!input || !input.trim()) {
+      if (hasIntro && (!input || !input.trim())) {
         return false;
       }
 
@@ -70,7 +79,7 @@ function Chat() {
         method: "POST",
         withCredentials: false,
         payload: JSON.stringify({
-          prompt: input,
+          prompt: hasIntro ? input : "hi",
           content: `${mapState.lat},${mapState.lng}`,
         }),
         headers: {
@@ -81,30 +90,47 @@ function Chat() {
       // register callbacks
       registerEventSourceCallbacks(eventSource);
 
+      if (input && input.trim()) {
+        setMessages((prev) => [
+          ...prev,
+          { content: input, role: Role.user } as ChatMessageDto,
+        ]);
+      }
+
       // issue request
       eventSource.stream();
 
       // clear the input
       setInput(null);
     },
-    [input, registerEventSourceCallbacks]
+    [input, registerEventSourceCallbacks, hasIntro, mapState.lat, mapState.lng]
   );
 
+  useEffect(() => {
+    console.log("useEffect", mapState.lat, mapState.lng, hasIntro);
+    if (mapState.hasUpdate && mapState.lat && mapState.lng && !hasIntro) {
+      handleSubmit();
+      setHasIntro(true);
+    }
+  }, [mapState.lat, mapState.lng, hasIntro, handleSubmit]);
+
   return (
-    <div className="fixed bottom-0 left-0 m-12 p-4 bg-gray-800/[.90] min-w-80 w-1/4 rounded-md text-white">
-      <MessageList
-        loading={loading}
-        streaming={streaming}
-        messages={messages}
-        stream={stream}
-      />
-      <ChatInput
-        isLoading={false}
-        input={input ?? ""}
-        handleInputChange={handleInputChange}
-        formRef={formRef}
-        onSubmit={handleSubmit}
-      />
+    <div className="fixed bottom-0 left-0 min-w-80 w-1/3 h-full text-white p-12 flex flex-col-reverse">
+      <div className="p-4 bg-gray-800/[.90] rounded-md w-full max-h-full flex flex-col">
+        <MessageList
+          loading={loading}
+          streaming={streaming}
+          messages={messages}
+          stream={stream}
+        />
+        <ChatInput
+          isLoading={false}
+          input={input ?? ""}
+          handleInputChange={handleInputChange}
+          formRef={formRef}
+          onSubmit={handleSubmit}
+        />
+      </div>
     </div>
   );
 }
