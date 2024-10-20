@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useCallback, useRef, useState } from "react";
 import { ReadyStateEvent, SSE, SSEvent } from "sse.js";
 import { ChatInput } from "./ChatInput";
+import { useMapStore } from "./hooks/useMapStore";
 import { MessageList } from "./MessageList";
 import { ChatMessageDto, Role } from "./types";
 
@@ -11,6 +12,7 @@ function Chat() {
   const [loading, setLoading] = useState<boolean>(false);
   const [streaming, setStreaming] = useState<boolean>(false);
   const [stream, setStream] = useState<ChatMessageDto | null>(null);
+  const mapState = useMapStore();
 
   const registerEventSourceCallbacks = useCallback((eventSource: SSE) => {
     eventSource.addEventListener("on_chain_end", (e: SSEvent) => {
@@ -69,7 +71,7 @@ function Chat() {
         withCredentials: false,
         payload: JSON.stringify({
           prompt: input,
-          content: "38.695074,-121.227314",
+          content: `${mapState.lat},${mapState.lng}`,
         }),
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -89,7 +91,7 @@ function Chat() {
   );
 
   return (
-    <div className="fixed bottom-0 left-0 m-12">
+    <div className="fixed bottom-0 left-0 m-12 p-4 bg-gray-800/[.90] min-w-80 w-1/4 rounded-md text-white">
       <MessageList
         loading={loading}
         streaming={streaming}

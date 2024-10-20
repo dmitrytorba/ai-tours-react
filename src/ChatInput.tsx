@@ -39,7 +39,7 @@ export const ChatInput = ({
     }
   };
   return (
-    <form onSubmit={onSubmit} className='flex gap-2'>
+    <form onSubmit={onSubmit} className="flex gap-2">
       <textarea
         autoFocus
         disabled={isLoading}
@@ -48,7 +48,7 @@ export const ChatInput = ({
         onKeyDown={handleKeyDown}
         data-testid="embed-chat-input"
         ref={textAreaRef}
-        placeholder="Type something here..."
+        placeholder="Ask the tour guide..."
       />
       <button>Send</button>
     </form>

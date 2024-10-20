@@ -16,7 +16,7 @@ export const MessageList = ({
   stream,
 }: Props) => {
   return (
-    <div>
+    <div className="flex flex-col gap-2 mb-4">
       {messages.map((item, index) => (
         <Fragment key={`user-msg-${index}`}>
           <Message
@@ -29,11 +29,22 @@ export const MessageList = ({
         </Fragment>
       ))}
       <Message
-        message={""}
+        message={
+          "This is a test message. It is long and will wrap. Maybe. Okay, it will. We're sure of it. We think. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see. It will wrap. We're sure of it. Maybe. Okay, we're not sure. It's a mystery. We'll see."
+        }
         loading={loading}
         streaming={streaming}
         messages={messages}
         stream={stream}
+      />
+
+      <Message
+        message={"Ok thats cool"}
+        loading={loading}
+        streaming={streaming}
+        messages={messages}
+        stream={stream}
+        isUser={true}
       />
     </div>
   );
