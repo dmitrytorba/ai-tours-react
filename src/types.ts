@@ -1,6 +1,6 @@
 export enum Role {
-  user = "user",
-  system = "system",
+  human = "human",
+  ai = "ai",
   tool = "tool",
 }
 

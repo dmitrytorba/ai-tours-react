@@ -25,7 +25,7 @@ export const MessageList = ({
             streaming={false}
             messages={messages}
             stream={null}
-            isUser={item.role === Role.user}
+            isUser={item.role === Role.human}
           />
         </Fragment>
       ))}

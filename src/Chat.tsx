@@ -26,7 +26,7 @@ function Chat() {
     eventSource.addEventListener("on_chain_end", (e: SSEvent) => {
       setMessages((prev) => [
         ...prev,
-        { content: e.data, role: Role.system } as ChatMessageDto,
+        { content: e.data, role: Role.ai } as ChatMessageDto,
       ]);
     });
 
@@ -79,8 +79,9 @@ function Chat() {
         method: "POST",
         withCredentials: false,
         payload: JSON.stringify({
-          prompt: hasIntro ? input : "hi",
-          content: `${mapState.lat},${mapState.lng}`,
+          content: hasIntro ? input : "hi",
+          user_location: `${mapState.lat},${mapState.lng}`,
+          history: messages,
         }),
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -93,7 +94,7 @@ function Chat() {
       if (input && input.trim()) {
         setMessages((prev) => [
           ...prev,
-          { content: input, role: Role.user } as ChatMessageDto,
+          { content: input, role: Role.human } as ChatMessageDto,
         ]);
       }
 
@@ -103,7 +104,14 @@ function Chat() {
       // clear the input
       setInput(null);
     },
-    [input, registerEventSourceCallbacks, hasIntro, mapState.lat, mapState.lng]
+    [
+      input,
+      registerEventSourceCallbacks,
+      hasIntro,
+      mapState.lat,
+      mapState.lng,
+      messages,
+    ]
   );
 
   useEffect(() => {
