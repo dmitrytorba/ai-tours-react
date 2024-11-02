@@ -47,13 +47,14 @@ export const ChatInput = ({
     <form onSubmit={onSubmit} className="flex gap-2 p-2" ref={formRef}>
       <textarea
         autoFocus
+        rows={1}
         disabled={isLoading}
         value={input}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         ref={textAreaRef}
         placeholder="Ask the tour guide..."
-        className="flex rounded-full resize-none bg-gray-700 w-full pl-4 pr-8"
+        className="flex rounded-full resize-none bg-gray-700 w-full pl-4 pr-8 py-2"
       />
       <button>Send</button>
     </form>
