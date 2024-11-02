@@ -51,13 +51,13 @@ export const Message = ({
 
   if (loading) {
     return (
-      <div className={cn("flex my-2", isUser ? "justify-end" : "mr-2")}>
-        <div
-          className={cn(
-            "animate-pulse bg-gray-700 rounded-full",
-            isUser ? "bg-gray-700" : "bg-gray-900"
-          )}
-        >
+      <div className={cn("flex my-2 mr-2")}>
+        <div className="bg-gray-900 rounded-full shrink-0 mr-2 w-10 h-10 flex ">
+          <div className="flex h-full w-full items-center justify-center">
+            <MapPinned className="w-4 h-4" />
+          </div>
+        </div>
+        <div className={cn("animate-pulse bg-gray-900 rounded-full")}>
           <div className="w-20 h-4" />
         </div>
       </div>
@@ -65,7 +65,7 @@ export const Message = ({
   }
 
   return (
-    <div className={cn("flex my-2", isUser ? "justify-end" : "mr-2")}>
+    <div className={cn("flex my-2 mr-2", isUser ? "justify-end" : "")}>
       {!isUser && (
         <div className="bg-gray-900 rounded-full shrink-0 mr-2 w-10 h-10 flex ">
           <div className="flex h-full w-full items-center justify-center">

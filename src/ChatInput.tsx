@@ -35,6 +35,7 @@ export const ChatInput = ({
     switch (event.key) {
       case "Enter":
         if (formRef.current && !event.getModifierState("Shift")) {
+          event.preventDefault();
           handleSubmit();
         }
         break;
@@ -43,7 +44,7 @@ export const ChatInput = ({
     }
   };
   return (
-    <form onSubmit={onSubmit} className="flex gap-2 p-2">
+    <form onSubmit={onSubmit} className="flex gap-2 p-2" ref={formRef}>
       <textarea
         autoFocus
         disabled={isLoading}

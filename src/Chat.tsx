@@ -40,7 +40,6 @@ function Chat() {
       // 2 = CLOSED
       // the event source has been closed, we are done streaming
       if (e.readyState === 2) {
-        console.log("closed");
         setLoading(false);
         setStreaming(false);
         setStream(null);
@@ -61,7 +60,6 @@ function Chat() {
       setLoading(true);
       e?.preventDefault();
 
-      console.log("handleSubmit", input);
       // ignore empty input
       if (hasIntro && (!input || !input.trim())) {
         return false;
@@ -115,7 +113,6 @@ function Chat() {
   );
 
   useEffect(() => {
-    console.log("useEffect", mapState.lat, mapState.lng, hasIntro);
     if (mapState.hasUpdate && mapState.lat && mapState.lng && !hasIntro) {
       handleSubmit();
       setHasIntro(true);
