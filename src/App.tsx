@@ -37,10 +37,10 @@ function App() {
     }
   }, []);
   return (
-    <>
+    <div className="flex flex-col h-full w-full">
       <Map />
       <Chat />
-    </>
+    </div>
   );
 }
 

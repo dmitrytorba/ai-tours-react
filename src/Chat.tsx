@@ -120,11 +120,15 @@ function Chat() {
       handleSubmit();
       setHasIntro(true);
     }
-  }, [mapState.lat, mapState.lng, hasIntro, handleSubmit]);
+  }, [mapState.lat, mapState.lng, mapState.hasUpdate, hasIntro, handleSubmit]);
+
+  if (!messages.length) {
+    return null;
+  }
 
   return (
-    <div className="fixed bottom-0 left-0 min-w-80 w-1/3 h-full text-white p-12 flex flex-col-reverse">
-      <div className="p-4 bg-gray-800/[.90] rounded-md w-full max-h-full flex flex-col">
+    <div className="md:fixed bottom-0 left-0 min-w-80 md:w-1/3 h-1/2 md:h-full text-white md:p-12 flex flex-col-reverse">
+      <div className="p-2 md:p-4 bg-gray-800/[.90] md:rounded-md w-full max-h-full flex flex-col">
         <MessageList
           loading={loading}
           streaming={streaming}

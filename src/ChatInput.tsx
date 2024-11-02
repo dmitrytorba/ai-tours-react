@@ -43,7 +43,7 @@ export const ChatInput = ({
     }
   };
   return (
-    <form onSubmit={onSubmit} className="flex gap-2">
+    <form onSubmit={onSubmit} className="flex gap-2 p-2">
       <textarea
         autoFocus
         disabled={isLoading}
