@@ -14,7 +14,6 @@ interface Props {
   message: string;
   loading: boolean;
   streaming: boolean;
-  messages: ChatMessageDto[];
   stream: ChatMessageDto | null;
   isUser?: boolean;
 }
@@ -28,7 +27,6 @@ export const Message = ({
   message,
   loading,
   streaming,
-  messages,
   stream,
   isUser = false,
 }: Props) => {
@@ -50,6 +48,21 @@ export const Message = ({
       }
     },
   };
+
+  if (loading) {
+    return (
+      <div className={cn("flex my-2", isUser ? "justify-end" : "mr-2")}>
+        <div
+          className={cn(
+            "animate-pulse bg-gray-700 rounded-full",
+            isUser ? "bg-gray-700" : "bg-gray-900"
+          )}
+        >
+          <div className="w-20 h-4" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={cn("flex my-2", isUser ? "justify-end" : "mr-2")}>

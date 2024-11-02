@@ -22,9 +22,8 @@ export const MessageList = ({
           <Message
             message={item.content}
             loading={loading}
-            streaming={false}
-            messages={messages}
-            stream={null}
+            streaming={streaming}
+            stream={stream}
             isUser={item.role === Role.human}
           />
         </Fragment>
