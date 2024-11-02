@@ -30,6 +30,14 @@ function Chat() {
       ]);
     });
 
+    eventSource.addEventListener("move_map", (e: SSEvent) => {
+      const data = JSON.parse(e.data.replace(/'/g, '"'));
+      const lat = parseFloat(data.lat);
+      const lng = parseFloat(data.lng);
+      mapState.addMarker(lat, lng, "HAHA");
+      mapState.setLatLng(lat, lng, 67.5, 10000);
+    });
+
     eventSource.onerror = (e: SSEvent) => {
       console.error(`[onerror] Error Occurred: ${e}`);
     };
@@ -72,7 +80,7 @@ function Chat() {
       //     payload: { date: now, input: input! },
       //   });
 
-      const eventSource = new SSE(`https://ai-tours-py.torb.uk/stream/`, {
+      const eventSource = new SSE(import.meta.env.VITE_STREAM_URL, {
         start: false, // delay issuing the request until stream() is called.
         method: "POST",
         withCredentials: false,
