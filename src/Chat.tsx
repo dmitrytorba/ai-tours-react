@@ -74,7 +74,7 @@ function Chat() {
       //     payload: { date: now, input: input! },
       //   });
 
-      const eventSource = new SSE(`http://localhost:8000/stream/`, {
+      const eventSource = new SSE(`https://ai-tours-py.torb.uk/stream/`, {
         start: false, // delay issuing the request until stream() is called.
         method: "POST",
         withCredentials: false,
