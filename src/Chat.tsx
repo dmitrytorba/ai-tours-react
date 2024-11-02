@@ -34,7 +34,8 @@ function Chat() {
       const data = JSON.parse(e.data.replace(/'/g, '"'));
       const lat = parseFloat(data.lat);
       const lng = parseFloat(data.lng);
-      mapState.addMarker(lat, lng, "HAHA");
+      const label = data.label;
+      mapState.addMarker(lat, lng, label);
       mapState.setLatLng(lat, lng, 67.5, 10000);
     });
 
