@@ -19,12 +19,19 @@ function Chat() {
   const [messages, setMessages] = useState<ChatMessageDto[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [streaming, setStreaming] = useState<boolean>(false);
-  const [stream, setStream] = useState<ChatMessageDto | null>(null);
+  const [stream, setStream] = useState<string>("");
   const [hasIntro, setHasIntro] = useState<boolean>(false);
   const mapState = useMapStore();
 
   const registerEventSourceCallbacks = useCallback((eventSource: SSE) => {
+    eventSource.addEventListener("chat_stream", (e: SSEvent) => {
+      setLoading(false);
+      setStreaming(true);
+      setStream((prev) => prev + (e.data || ""));
+    });
+
     eventSource.addEventListener("on_chain_end", (e: SSEvent) => {
+      setStreaming(false);
       setMessages((prev) => [
         ...prev,
         { content: e.data, role: Role.ai } as ChatMessageDto,
@@ -42,9 +49,15 @@ function Chat() {
 
     eventSource.onerror = (e: SSEvent) => {
       console.error(`[onerror] Error Occurred: ${e}`);
+      setLoading(false);
+      setStreaming(false);
+      setStream("");
     };
     eventSource.onabort = (e: SSEvent) => {
       console.error(`[onabort] Error Occurred: ${e}`);
+      setLoading(false);
+      setStreaming(false);
+      setStream("");
     };
     eventSource.onreadystatechange = (e: ReadyStateEvent) => {
       // 2 = CLOSED
@@ -52,7 +65,7 @@ function Chat() {
       if (e.readyState === 2) {
         setLoading(false);
         setStreaming(false);
-        setStream(null);
+        setStream("");
       }
     };
   }, []);
@@ -132,7 +145,7 @@ function Chat() {
   return (
     <div className="md:fixed bottom-0 left-0 min-w-80 md:w-1/3 h-1/2 md:h-full text-white md:p-12 flex flex-col-reverse">
       <div className="p-2 md:p-4 bg-gray-800/[.90] md:rounded-md w-full max-h-full flex flex-col">
-        {!messages.length ? (
+        {!messages.length && !streaming ? (
           <div className="flex justify-center">
             <LoaderPinwheel className="animate-spin h-12 w-12 text-white" />
           </div>

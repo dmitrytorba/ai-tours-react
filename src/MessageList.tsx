@@ -6,7 +6,7 @@ interface Props {
   loading: boolean;
   streaming: boolean;
   messages: ChatMessageDto[];
-  stream: ChatMessageDto | null;
+  stream: string | null;
 }
 
 export const MessageList = ({
@@ -28,8 +28,8 @@ export const MessageList = ({
           <Message
             message={item.content}
             loading={false}
-            streaming={streaming}
-            stream={stream}
+            streaming={false}
+            stream={null}
             isUser={item.role === Role.human}
           />
         </Fragment>
@@ -38,9 +38,19 @@ export const MessageList = ({
         <Message
           message={""}
           loading={loading}
-          streaming={streaming}
+          streaming={false}
+          stream={null}
+          isUser={false}
+        />
+      ) : null}
+      {streaming ? (
+        <Message
+          message={""}
+          loading={false}
+          streaming={true}
           stream={stream}
           isUser={false}
+          scrollRef={scrollToDiv}
         />
       ) : null}
       <div ref={scrollToDiv} />
