@@ -30,8 +30,9 @@ function Chat() {
       setStream((prev) => prev + (e.data || ""));
     });
 
-    eventSource.addEventListener("on_chain_end", (e: SSEvent) => {
+    eventSource.addEventListener("chat_stop", (e: SSEvent) => {
       setStreaming(false);
+      setStream("");
       setMessages((prev) => [
         ...prev,
         { content: e.data, role: Role.ai } as ChatMessageDto,
