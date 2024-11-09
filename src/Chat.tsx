@@ -145,9 +145,9 @@ function Chat() {
 
   return (
     <div className="md:fixed bottom-0 left-0 min-w-80 md:w-1/3 h-1/2 md:h-full text-white md:p-12 flex flex-col-reverse">
-      <div className="p-2 md:p-4 bg-gray-800/[.90] md:rounded-md w-full max-h-full flex flex-col">
+      <div className="p-2 md:p-4 bg-gray-800/[.90] md:rounded-md w-full max-h-full flex flex-col h-full md:h-auto">
         {!messages.length && !streaming ? (
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center h-full">
             <LoaderPinwheel className="animate-spin h-12 w-12 text-white" />
           </div>
         ) : (
