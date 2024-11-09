@@ -5,7 +5,7 @@ import parse, {
   HTMLReactParserOptions,
 } from "html-react-parser";
 import { Config } from "isomorphic-dompurify";
-import { MapPinned } from "lucide-react";
+import { MapPin, MapPinned } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "./lib/utils";
 import {
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const sanitizeOptions: Config = {
-  // Return a string instead of a parsed DOM tree/elements.
+  ADD_TAGS: ["animated-cursor"],
   RETURN_DOM: false,
 };
 
@@ -70,14 +70,11 @@ export const Message = ({
           </h3>
         );
       }
-      if (el.type === "tag" && el.name === "animated-text-placeholder") {
-        return <span className="blinking-cursor">|</span>;
-      }
-      if (el.type === "tag" && el.name === "li") {
+      if (el.type === "tag" && el.name === "animated-cursor") {
         return (
-          <li className="py-2">
-            {domToReact(el.children as DOMNode[], parseOptions)}
-          </li>
+          <span className="inline-block animate-pulse w-4 h-4 ml-1 pt-1">
+            <MapPin className="w-4 h-4" />
+          </span>
         );
       }
     },
@@ -121,7 +118,7 @@ export const Message = ({
             )
           : parse(
               DOMPurify.sanitize(
-                markdownToHtml(message!),
+                markdownToHtml(message),
                 sanitizeOptions
               ) as string,
               parseOptions

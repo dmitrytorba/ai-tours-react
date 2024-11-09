@@ -4,7 +4,7 @@ import { Marked, RendererThis, TokenizerThis, Tokens } from "marked";
 import { markedHighlight } from "marked-highlight";
 
 export const BLINKING_CURSOR_DELAY = 15;
-export const ANIMATED_TEXT_PLACEHOLDER = "<animated-text-placeholder/>";
+export const ANIMATED_TEXT_PLACEHOLDER = "<animated-cursor/>";
 
 const XML_ENTITY_MAP = new Map<string, string>(
   Object.entries({
@@ -63,8 +63,8 @@ marked.use({
         const body = token.items
           .map((item: any) =>
             token.ordered
-              ? `<li class="ordered-list">
-                   <span>${item.raw.split(".")[0]}.</span>
+              ? `<li class="flex pl-0 mx-4 mr-6">
+                   <span class="pt-1 mr-2">${item.raw.split(".")[0]}.</span>
                    <div>${this.parser.parse(item.tokens)}</div>
                  </li>`
               : `<li>${this.parser.parse(item.tokens)}</li>`
