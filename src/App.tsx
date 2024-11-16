@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
 
     const fetchCoords = async () => {
-      const res = await fetch("http://127.0.0.1:8000/ipcoords/");
+      const res = await fetch(import.meta.env.VITE_BE_HOST + "/ipcoords/");
       const data = (await res.json()) as { lat: number; lng: number };
       mapState.addMarker(data.lat, data.lng, "You are here");
       mapState.setLatLng(data.lat, data.lng, 67.5, 10000);

@@ -96,7 +96,7 @@ function Chat() {
       //     payload: { date: now, input: input! },
       //   });
 
-      const eventSource = new SSE(import.meta.env.VITE_STREAM_URL, {
+      const eventSource = new SSE(import.meta.env.VITE_BE_HOST + "/stream", {
         start: false, // delay issuing the request until stream() is called.
         method: "POST",
         withCredentials: false,
