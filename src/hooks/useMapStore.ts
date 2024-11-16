@@ -28,6 +28,6 @@ export const useMapStore = create<MapState>((set, get) => ({
       position: { lat, lng },
       label,
     });
-    get().map.append(markerWithLabel);
+    get().map?.append(markerWithLabel);
   },
 }));
