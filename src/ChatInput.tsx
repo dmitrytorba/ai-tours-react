@@ -23,6 +23,9 @@ export const ChatInput = ({
   useAutosizeTextArea(textAreaRef.current, input);
 
   const handleSubmit = () => {
+    if (isLoading) {
+      return;
+    }
     if (formRef.current) {
       formRef.current.dispatchEvent(
         new Event("submit", { cancelable: true, bubbles: true })
@@ -50,7 +53,6 @@ export const ChatInput = ({
       <textarea
         autoFocus={!isMobile}
         rows={1}
-        disabled={isLoading}
         value={input}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
