@@ -159,7 +159,7 @@ function Chat() {
               stream={stream}
             />
             <ChatInput
-              isLoading={false}
+              isLoading={streaming}
               input={input ?? ""}
               handleInputChange={handleInputChange}
               formRef={formRef}

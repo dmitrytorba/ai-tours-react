@@ -1,4 +1,5 @@
 import { ChangeEvent, useRef } from "react";
+import useMatchMedia from "./hooks/use-match-media";
 import useAutosizeTextArea from "./hooks/useAutoresizeTextarea";
 
 interface ChatInputProps {
@@ -16,6 +17,7 @@ export const ChatInput = ({
   isLoading,
   handleInputChange,
 }: ChatInputProps) => {
+  const isMobile = useMatchMedia("(max-width: 768px)");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useAutosizeTextArea(textAreaRef.current, input);
@@ -46,7 +48,7 @@ export const ChatInput = ({
   return (
     <form onSubmit={onSubmit} className="flex gap-2 p-2" ref={formRef}>
       <textarea
-        autoFocus
+        autoFocus={!isMobile}
         rows={1}
         disabled={isLoading}
         value={input}
